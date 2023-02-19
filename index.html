@@ -647,6 +647,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <html>
 <head>
 	<title>Content Generator for Word Document</title>
+    <link rel="stylesheet" href="spin.css">
     <style>
  
         .container {
@@ -741,9 +742,20 @@ document.addEventListener("DOMContentLoaded", () => {
             cursor: pointer;
             margin-top: 2rem;
         }
+
+        @media only screen and (max-width: 767px) {
+          .container {
+            flex-direction: column;
+          }
+          
+          .input-container,
+          .preview-container {
+            flex-basis: 100%;
+          }
+      }
+
  
     </style>
-    <link rel="stylesheet" href="spin.css">
     <script src="spin.js">
       
     </script>
@@ -752,7 +764,6 @@ document.addEventListener("DOMContentLoaded", () => {
 </head>
 <body>
 
-  
   <!-- <div class="main-content"> -->
         <div class="container">
 
@@ -922,8 +933,6 @@ document.addEventListener("DOMContentLoaded", () => {
           const target = document.getElementById("loadingSpinner");
           // let spinner = new Spinner(opts).spin(target);
           var spinner = new Spin.Spinner(opts).spin(target);
-
-
 
             $.ajax({
                 url: 'https://37soa.edu.gh/createdocument.php',
