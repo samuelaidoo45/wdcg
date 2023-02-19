@@ -648,12 +648,7 @@ document.addEventListener("DOMContentLoaded", () => {
 <head>
 	<title>Fuck You</title>
     <style>
-        /* body {
-  margin: 0;
-  padding: 0;
-  font-family: Arial, sans-serif;
-  height: 100%;
-} */
+ 
         .container {
             display: flex;
             flex-wrap: wrap;
@@ -754,17 +749,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
   <!-- <div class="main-content"> -->
         <div class="container">
-          <!-- <div class="sidebar">
-            
-            <ul>
-              <h1>Navigation</h1>
-              <li><a href="#">Login</a></li>
-              <li><a href="#">Signup</a></li>
-              <li><a href="#"></a></li>
-              <li><a href="#"></a></li>
-            </ul>
 
-          </div> -->
           <div class="input-container">
             <!-- <h1 style="text-align:center">Document Creator</h1> -->
             <label for="title">Title:</label>
@@ -885,11 +870,13 @@ document.addEventListener("DOMContentLoaded", () => {
             alert("Please enter a document title.");
             return;
           }
+          
           // if (type.trim() === "") {
           
           //   alert("Please enter a document type.");
           //   return;
           // }
+
           if (sections.length === 0) {
          
             alert("Please add at least one section to the document.");
@@ -956,29 +943,6 @@ document.addEventListener("DOMContentLoaded", () => {
                       })
                     );
 
-                    // section.children.push(
-                    //   new docx.Paragraph({
-                    //     children: [
-                    //       new docx.TextRun({
-                    //           text: sections[i],
-                    //           bold: true, // make the text bold
-                    //           size: 32, // increase the font size
-                    //           font: 'Arial', // change the font
-                    //       }),
-                          
-                    //       new docx.TextRun({
-                    //         text: responseText[i][1],
-                    //         size: 28,
-                    //         font: "Times New Roman"
-                    //       })
-                    //     ],
-                    //     spacing: {
-                    //       line: 360, // 1.5 x 180 = 270 (default line height is 180 twips)
-                    //       before: 400,
-                    //       after: 400
-                    //     }
-                    //   })
-                    // );
                   }
 
                   // add the section to the document
