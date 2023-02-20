@@ -808,6 +808,8 @@ document.addEventListener("DOMContentLoaded", () => {
             <label for="section">Section:</label>
             <textarea id="section" placeholder="What are the main sections of your document? (e.g. Executive Summary, Methodology, Results)"></textarea>
             <button id="addSection">Add Section</button>
+            <button id="open-popup">Click me to open the pop-up!</button>
+
           </div>
           <div class="preview-container">
             <h1 style="text-align:center">Preview</h1>
@@ -816,11 +818,11 @@ document.addEventListener("DOMContentLoaded", () => {
             <p id="previewContext"></p>
             <div id="previewSections"></div>
             <button id="submit">Generate Content</button>
+
           </div>
       </div>
     <!-- </div> -->
 
-    <!-- <button id="open-popup">Click me to open the pop-up!</button> -->
 
 <div id="popup-container">
   <div id="popup">
@@ -868,6 +870,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const popupContainer = document.getElementById("popup-container");
 
         popupContainer.style.display = "block";
+
+
+        openPopupButton.addEventListener("click",()=>{
+          popupContainer.style.display = "block";
+        })
 
 
         closePopupButton.addEventListener("click", () => {
