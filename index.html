@@ -1110,10 +1110,25 @@ document.addEventListener("DOMContentLoaded", () => {
                     children: []
                   };
 
+
                   // loop through the responseText array and add each paragraph to the section
                   for (let i = 0; i < responseText.length; i++) {
 
                     section.children.push(
+
+                      new docx.Paragraph({
+                        children: [
+                          new docx.TextRun({
+                            text: (i == 0)?title:'',
+                            bold: true,
+                            size: 32,
+                            font: 'Arial',
+                          }),
+                        ],
+                        alignment: docx.AlignmentType.CENTER, // Center align the paragraph
+                        
+                      }),
+
                       new docx.Paragraph({
                         children: [
                           new docx.TextRun({
@@ -1129,6 +1144,7 @@ document.addEventListener("DOMContentLoaded", () => {
                           after: 0, // reduce the spacing after the heading to 0
                         },
                       }),
+
                       new docx.Paragraph({
                         children: [
                           new docx.TextRun({
@@ -1195,7 +1211,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const analytics = getAnalytics(app);
       </script>
       <footer>
-        <p>&copy; 2023 My Website. All rights reserved.</p>
+        <p>&copy; 2023. All rights reserved.</p>
       </footer>      
 </body>
 </html>
