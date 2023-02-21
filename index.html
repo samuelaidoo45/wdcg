@@ -853,6 +853,12 @@ document.addEventListener("DOMContentLoaded", () => {
           display: flex;
           justify-content: center;
           align-items: center;
+          position: absolute;
+          left: 0;
+          bottom: 0;
+          height: 100px;
+          width: 100%;
+          overflow: hidden;
         }
 
         footer p {
@@ -1210,9 +1216,11 @@ document.addEventListener("DOMContentLoaded", () => {
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
       </script>
-      <footer>
-        <p>&copy; 2023. All rights reserved.</p>
-      </footer>      
+     
 </body>
+
+<footer >
+  <p>&copy; 2023. All rights reserved.</p>
+</footer> 
 </html>
 
