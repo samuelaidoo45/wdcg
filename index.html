@@ -650,7 +650,6 @@ document.addEventListener("DOMContentLoaded", () => {
     <link rel="stylesheet" href="spin.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
     <style>
  
         .container {
@@ -855,6 +854,27 @@ document.addEventListener("DOMContentLoaded", () => {
           align-items: center;
         }
 
+        footer {
+
+          height: 60px; /* set fixed height for footer */
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: #333;
+        color: #fff;
+        text-align: center;
+       
+      }
+
+      footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  background-color: #eee;
+}
+
         footer p {
           margin: 0;
         }
@@ -875,12 +895,51 @@ document.addEventListener("DOMContentLoaded", () => {
           }
       }
 
-    
+      .content {
+      min-height: calc(100vh - 56px); /* 56px is the height of the fixed navbar */
+    }
+
+    body {
+    /* Set the minimum height of the page to 100% */
+    min-height: 100%;
+    /* Position the content area using flexbox */
+    display: flex;
+    flex-direction: column;
+  }
+
+  main {
+    /* Set the main content area to grow to fill the available space */
+    flex-grow: 1;
+  }
+
+  footer {
+    /* Set the footer to be positioned at the bottom of the page */
+    position: relative;
+    bottom: 0;
+    width: 100%;
+    background-color: #333;
+    color: #fff;
+  }
+
     </style>
     <script src="spin.js">
     </script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  
 </head>
-<body>
+<body> 
+
+  <!-- <header>
+    <nav>
+      <ul>
+        <li><a href="#">Signup</a></li>
+        <li><a href="#">Login</a></li>
+        <li><a href="#">Home</a></li>
+      </ul>
+    </nav>
+  </header> -->
 
   <header>
     <nav>
@@ -891,7 +950,7 @@ document.addEventListener("DOMContentLoaded", () => {
       </ul>
     </nav>
   </header>
-
+  
   <!-- <div class="main-content"> -->
         <div class="container">
           <div class="input-container">
@@ -1210,11 +1269,15 @@ document.addEventListener("DOMContentLoaded", () => {
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
       </script>
-     
+
+
+
+
+
 </body>
 
-<!-- <footer >
-  <p>&copy; 2023. All rights reserved.</p>
-</footer>  -->
+<footer >
+  <p>&copy; 2023. All rights reserved. Follow me on <a href="https://twitter.com/_samuelaidoo" style="color:#007bff">Twitter</a></p>
+</footer>   
 </html>
 
