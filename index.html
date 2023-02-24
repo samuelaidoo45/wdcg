@@ -651,8 +651,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <style>
- 
-        .container {
+        .container{
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
@@ -663,12 +662,12 @@ document.addEventListener("DOMContentLoaded", () => {
           margin: 0;
         }
 
-        /* .sidebar{
+        /*.sidebar{
             flex-basis: 20%;
             padding: 1rem;
             box-sizing: border-box;            
         }
-     */
+        */
         .input-container {
             flex-basis: 50%;
             padding: 1rem;
@@ -855,33 +854,29 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         footer {
-
           height: 60px; /* set fixed height for footer */
-        position: fixed;
-        bottom: 0;
-        width: 100%;
-        background-color: #333;
-        color: #fff;
-        text-align: center;
-       
-      }
-
-      footer {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100px;
-  background-color: #eee;
-}
-
-        footer p {
-          margin: 0;
+          position: fixed;
+          bottom: 0;
+          width: 100%;
+          background-color: #333;
+          color: #fff;
+          text-align: center;
         }
 
+        footer {
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          height: 100px;
+          background-color: #eee;
+        }
 
+        footer p {
+            margin: 0;
+        }
 
-        @media only screen and (max-width: 767px) {
+      @media only screen and (max-width: 767px) {
           body{
             margin: 0 auto;
           }
@@ -893,33 +888,60 @@ document.addEventListener("DOMContentLoaded", () => {
           .preview-container {
             flex-basis: 100%;
           }
+
+          #popup-container{
+
+          }
       }
 
       .content {
-      min-height: calc(100vh - 56px); /* 56px is the height of the fixed navbar */
-    }
+        min-height: calc(100vh - 56px); /* 56px is the height of the fixed navbar */
+      }
 
-    body {
-    /* Set the minimum height of the page to 100% */
-    min-height: 100%;
-    /* Position the content area using flexbox */
-    display: flex;
-    flex-direction: column;
-  }
+      body {
+      /* Set the minimum height of the page to 100% */
+      min-height: 100%;
+      /* Position the content area using flexbox */
+      display: flex;
+      flex-direction: column;
+      }
 
-  main {
-    /* Set the main content area to grow to fill the available space */
-    flex-grow: 1;
-  }
+      main {
+        /* Set the main content area to grow to fill the available space */
+        flex-grow: 1;
+      }
 
-  footer {
-    /* Set the footer to be positioned at the bottom of the page */
-    position: relative;
-    bottom: 0;
-    width: 100%;
-    background-color: #333;
-    color: #fff;
-  }
+      footer {
+        /* Set the footer to be positioned at the bottom of the page */
+        position: relative;
+        bottom: 0;
+        width: 100%;
+        background-color: #333;
+        color: #fff;
+      }
+
+      #popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 80%;
+        max-width: 400px;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+        text-align: center;
+        font-size: 16px;
+      }
+
+      @media screen and (max-width: 480px) {
+        #popup {
+          width: 90%;
+          max-width: none;
+          font-size: 14px;
+        }
+      }
+
 
     </style>
     <script src="spin.js">
@@ -930,17 +952,6 @@ document.addEventListener("DOMContentLoaded", () => {
   
 </head>
 <body> 
-
-  <!-- <header>
-    <nav>
-      <ul>
-        <li><a href="#">Signup</a></li>
-        <li><a href="#">Login</a></li>
-        <li><a href="#">Home</a></li>
-      </ul>
-    </nav>
-  </header> -->
-
   <header>
     <nav>
       <ul>
@@ -951,39 +962,36 @@ document.addEventListener("DOMContentLoaded", () => {
     </nav>
   </header>
   
-  <!-- <div class="main-content"> -->
-        <div class="container">
-          <div class="input-container">
-            <h1 style="text-align:center">Document Creator</h1>
-            <label for="title">Title:</label>
-            <input type="text" id="title" placeholder="What is the document about? (e.g. Marketing Plan for New Product Launch)">
-            <!-- <label for="type">Type:</label>
-            <input type="text" id="type" placeholder="Enter document type"> -->
-            <label for="context">Context:</label>
-            <textarea id="context" placeholder="What is the main issue the document is addressing? (e.g. Lack of Access to Healthcare)"></textarea>
-            <label for="section">Section:</label>
-            <textarea id="section" placeholder="What are the main sections of your document? (e.g. Executive Summary, Methodology, Results)"></textarea>
-            <button id="addSection">Add Section</button>
-            <button id="open-popup">Click me to open the pop-up!</button>
-          </div>
+    <div class="container">
+        <div class="input-container">
+          <h1 style="text-align:center">Document Creator</h1>
+          <label for="title">Title:</label>
+          <input type="text" id="title" placeholder="What is the document about? (e.g. Marketing Plan for New Product Launch)">
+          <!-- <label for="type">Type:</label>
+          <input type="text" id="type" placeholder="Enter document type"> -->
+          <label for="context">Context:</label>
+          <textarea id="context" placeholder="What is the main issue the document is addressing? (e.g. Lack of Access to Healthcare)"></textarea>
+          <label for="section">Section:</label>
+          <textarea id="section" placeholder="What are the main sections of your document? (e.g. Executive Summary, Methodology, Results)"></textarea>
+          <button id="addSection">Add Section</button>
+          <button id="open-popup">Click me to open the pop-up!</button>
+        </div>
 
 
-          <div class="preview-container">
-            <h1 style="text-align:center">Preview</h1>
-            <h2 id="previewTitle"></h2>
-            <h2 id="previewType"></h2>
-            <p id="previewContext"></p>
-            <div id="previewSections"></div>
-            <button id="submit">Generate Content</button>
+        <div class="preview-container">
+          <h1 style="text-align:center">Preview</h1>
+          <h2 id="previewTitle"></h2>
+          <h2 id="previewType"></h2>
+          <p id="previewContext"></p>
+          <div id="previewSections"></div>
+          <button id="submit">Generate Content</button>
 
-            <br>
-            <br>
-            <a href="https://forms.gle/EycQ1LMqK9d1bA4LA" target="_blank" style="display:block">Please fill this form to give us feedback</a>
+          <br>
+          <br>
+          <a href="https://forms.gle/EycQ1LMqK9d1bA4LA" target="_blank" style="display:block">Please fill this form to give us feedback</a>
 
-          </div>
-      </div>
-    <!-- </div> -->
-
+        </div>
+    </div>
 
 <div id="popup-container">
   <div id="popup">
@@ -1006,7 +1014,6 @@ document.addEventListener("DOMContentLoaded", () => {
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script> -->
 
     <!-- Include the spin.js CSS -->
-
     <script>
         const titleInput = document.getElementById("title");
         const typeInput = document.getElementById("type");
@@ -1085,6 +1092,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 renderSections();
               }
             });
+
             deleteButton.innerText = "Delete";
             deleteButton.addEventListener("click", () => {
               const confirmDelete = confirm("Are you sure you want to delete this section?");
@@ -1269,11 +1277,6 @@ document.addEventListener("DOMContentLoaded", () => {
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
       </script>
-
-
-
-
-
 </body>
 
 <footer >
