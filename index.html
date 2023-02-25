@@ -649,6 +649,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	<title>Content Generator for Word Document</title>
     <link rel="stylesheet" href="spin.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Generate content for your next word document">
 
     <style>
         .container{
@@ -658,8 +659,15 @@ document.addEventListener("DOMContentLoaded", () => {
             align-items: flex-start;
         }
 
+        html{
+          height: 100%;
+        }
+
         body{
           margin: 0;
+          min-height: 100%;
+          display: flex;
+          flex-direction: column;
         }
 
         /*.sidebar{
@@ -888,10 +896,6 @@ document.addEventListener("DOMContentLoaded", () => {
           .preview-container {
             flex-basis: 100%;
           }
-
-          #popup-container{
-
-          }
       }
 
       .content {
@@ -918,6 +922,7 @@ document.addEventListener("DOMContentLoaded", () => {
         width: 100%;
         background-color: #333;
         color: #fff;
+        margin-top: auto;
       }
 
       #popup {
@@ -942,25 +947,23 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       }
 
-
     </style>
     <script src="spin.js">
     </script>
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
-  
 </head>
 <body> 
-  <header>
-    <nav>
-      <ul>
-        <li><a href="#">Signup</a></li>
-        <li><a href="#">Login</a></li>
-        <li><a href="#">Home</a></li>
-      </ul>
-    </nav>
-  </header>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="#">Signup</a></li>
+          <li><a href="#">Login</a></li>
+          <li><a href="#">Home</a></li>
+        </ul>
+      </nav>
+    </header>
   
     <div class="container">
         <div class="input-container">
@@ -993,13 +996,13 @@ document.addEventListener("DOMContentLoaded", () => {
         </div>
     </div>
 
-<div id="popup-container">
-  <div id="popup">
-    <h2>Welcome to our app!</h2>
-    <p>Welcome to our app! We're thrilled to have you here and we can't wait to show you what we've created. Our app is a powerful content generator designed to help you create high-quality Word documents quickly and easily. Whether you're a student, a professional, or someone who just needs to write a letter, our app can help you create great content in no time. We're committed to making our app the best it can be, so if you have any feedback or questions, please let us know on <a>samuelaidoo45@gmail.com</a> and <a href="https://forms.gle/EycQ1LMqK9d1bA4LA">Please provide feedback</a>. Thanks for choosing our app and happy creating!</p>
-    <button id="close-popup">Close</button>
-  </div>
-</div>
+    <div id="popup-container">
+      <div id="popup">
+        <h2>Welcome to our app!</h2>
+        <p>Welcome to our app! We're thrilled to have you here and we can't wait to show you what we've created. Our app is a powerful content generator designed to help you create high-quality Word documents quickly and easily. Whether you're a student, a professional, or someone who just needs to write a letter, our app can help you create great content in no time. We're committed to making our app the best it can be, so if you have any feedback or questions, please let us know on <a>samuelaidoo45@gmail.com</a> and <a href="https://forms.gle/EycQ1LMqK9d1bA4LA">Please provide feedback</a>. Thanks for choosing our app and happy creating!</p>
+        <button id="close-popup">Close</button>
+      </div>
+    </div>
 
     <div id="loadingSpinner"></div>
   
@@ -1177,7 +1180,6 @@ document.addEventListener("DOMContentLoaded", () => {
                     children: []
                   };
 
-
                   // loop through the responseText array and add each paragraph to the section
                   for (let i = 0; i < responseText.length; i++) {
 
@@ -1279,8 +1281,9 @@ document.addEventListener("DOMContentLoaded", () => {
       </script>
 </body>
 
-<footer >
+<footer>
   <p>&copy; 2023. All rights reserved. Follow me on <a href="https://twitter.com/_samuelaidoo" style="color:#007bff">Twitter</a></p>
-</footer>   
+</footer> 
+
 </html>
 
