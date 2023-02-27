@@ -976,22 +976,18 @@ document.addEventListener("DOMContentLoaded", () => {
   
     <div class="container">
 
-      <div style="text-align:center" class="preview-container">
+      <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; width:100%" class="preview-container">
         <h1 >Preview</h1>
         <h2 id="previewTitle"></h2>
         <h2 id="previewType"></h2>
         <h3 id="previewContext"></h3>
         <div id="previewSections"></div>
         <button id="submit">Generate Content</button>
-
-        <br>
-        <br>
-        <!-- <a href="https://forms.gle/EycQ1LMqK9d1bA4LA" target="_blank" style="display:block">Please fill this form to give us feedback</a> -->
-
+        
       </div>
 
-      <div class="input-container">
-          <h1 style="text-align:center">Document Creator</h1>
+      <div class="input-container" style="display: flex; align-items: center; justify-content: center; flex-direction: column; width:100%">
+          <h1 style="text-align:center">Create Document</h1>
           <label for="title">Title:</label>
           <input type="text" id="title" placeholder="What is the document about? (e.g. Marketing Plan for New Product Launch)">
           <!-- <label for="type">Type:</label>
@@ -1000,8 +996,11 @@ document.addEventListener("DOMContentLoaded", () => {
           <textarea id="context" placeholder="What is the main issue the document is addressing? (e.g. Lack of Access to Healthcare)"></textarea>
           <label for="section">Section:</label>
           <textarea id="section" placeholder="What are the main sections of your document? (e.g. Executive Summary, Methodology, Results)"></textarea>
-          <button id="addSection">Add Section</button>
-          <button id="open-popup">Click me to open the pop-up!</button>
+          <div>
+            <button id="addSection">Add Section</button>
+            <button id="open-popup">Click me to open the pop-up!</button>
+          </div>
+
         </div>
 
 
