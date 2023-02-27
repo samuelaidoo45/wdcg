@@ -1008,7 +1008,7 @@ document.addEventListener("DOMContentLoaded", () => {
     <div id="popup-container">
       <div id="popup">
         <h2>Welcome to our app!</h2>
-        <p>Welcome to our app! We're thrilled to have you here and we can't wait to show you what we've created. Our app is a powerful content generator designed to help you create high-quality Word documents quickly and easily. Whether you're a student, a professional, or someone who just needs to write a letter, our app can help you create great content in no time. We're committed to making our app the best it can be, so if you have any feedback or questions, please let us know on <a>samuelaidoo45@gmail.com</a> and <a href="https://forms.gle/EycQ1LMqK9d1bA4LA">Please provide feedback</a>. Thanks for choosing our app and happy creating!</p>
+        <p style="text-align: justify;">Welcome to our app! We're thrilled to have you here and we can't wait to show you what we've created. Our app is a powerful content generator designed to help you create high-quality Word documents quickly and easily. Whether you're a student, a professional, or someone who just needs to write a letter, our app can help you create great content in no time. We're committed to making our app the best it can be, so if you have any feedback or questions, please let us know on <a>samuelaidoo45@gmail.com</a> and <a href="https://forms.gle/EycQ1LMqK9d1bA4LA">Please provide feedback</a>. Thanks for choosing our app and happy creating!</p>
         <button id="close-popup">Close</button>
       </div>
     </div>
@@ -1090,25 +1090,79 @@ document.addEventListener("DOMContentLoaded", () => {
             const sectionText = document.createElement("p");
             const editButton = document.createElement("button");
             const deleteButton = document.createElement("button");
+
+            editButton.style.marginLeft = '10px';
+            deleteButton.style.marginLeft = '10px';
+
       
             sectionHeader.innerText = `Section ${index + 1}`;
             sectionText.innerText = section;
             editButton.innerText = "Edit";
+            // editButton.addEventListener("click", () => {
+
+              // const newSection = prompt("Enter new section text:", section);
+              // if (newSection !== null && newSection.trim() !== "") {
+              //   sections[index] = newSection;
+              //   renderSections();
+              // }
+
+
+            // });
+
             editButton.addEventListener("click", () => {
-              const newSection = prompt("Enter new section text:", section);
-              if (newSection !== null && newSection.trim() !== "") {
-                sections[index] = newSection;
-                renderSections();
-              }
+              Swal.fire({
+                title: 'Enter new section text:',
+                input: 'text',
+                inputValue: section,
+                showCancelButton: true,
+                confirmButtonText: 'Save',
+                cancelButtonText: 'Cancel',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+              }).then((result) => {
+                if (result.isConfirmed) {
+                  const newSection = result.value;
+                  if (newSection !== null && newSection.trim() !== "") {
+                    sections[index] = newSection;
+                    renderSections();
+                  }
+                }
+              });
             });
 
             deleteButton.innerText = "Delete";
             deleteButton.addEventListener("click", () => {
-              const confirmDelete = confirm("Are you sure you want to delete this section?");
-              if (confirmDelete) {
-                sections.splice(index, 1);
-                renderSections();
-              }
+            // const confirmDelete = confirm("Are you sure you want to delete this section?");
+
+
+            Swal.fire({
+                  title: 'Delete!',
+                  html: `<p style='font-size: 1.5rem'>Are you sure you want to delete this section?"</p>`,
+                  icon: 'info',
+                  showCancelButton: true,
+                  confirmButtonColor: '#3085d6',
+                  cancelButtonColor: '#d33',
+                  confirmButtonText: 'Delete',
+                  cancelButtonText: 'Cancel',
+                  allowOutsideClick: false,
+                  allowEscapeKey: false,
+                  allowEnterKey: false,
+                  showLoaderOnConfirm: true,
+                  width: '50rem',
+                  // preConfirm: () => {
+                  //     return new Promise((resolve, reject) => {
+
+
+                  //     })
+                  // }
+                }).then((result) => {
+                  if (result.value) {
+                    sections.splice(index, 1);
+                    renderSections();
+                  }
+                });
+
             });
       
             sectionDiv.appendChild(sectionHeader);
@@ -1150,10 +1204,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             return;
           }
-      
-          // const confirmation = confirm("Are you sure you want to submit this document?");
-
-          // if (confirmation) {
 
           Swal.fire({
                 title: 'Generate Content',
