@@ -650,7 +650,6 @@ document.addEventListener("DOMContentLoaded", () => {
     <link rel="stylesheet" href="spin.css">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Generate content for your next word document">
-
     <style>
         .container{
             display: flex;
@@ -948,9 +947,19 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
     </style>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.10/dist/sweetalert2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.10/dist/sweetalert2.min.js"></script>
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/docx@7.8.2/build/index.min.js"></script>
+    <script src="https://unpkg.com/docx@5.0.2/build/index.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script src="spin.js">
     </script>
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </head>
@@ -1007,11 +1016,8 @@ document.addEventListener("DOMContentLoaded", () => {
     <div id="loadingSpinner"></div>
   
     <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docx@7.8.2/build/index.min.js"></script>
-    <script src="https://unpkg.com/docx@5.0.2/build/index.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
+
+
 
     <!-- Include the spin.js library -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script> -->
@@ -1114,9 +1120,16 @@ document.addEventListener("DOMContentLoaded", () => {
         }
       
         submitButton.addEventListener("click", () => {
+
+
           if (title.trim() === "") {
            
-            alert("Please enter a document title.");
+            Swal.fire({
+              title: 'Oops! We need more information.',
+              html: `<p style='font-size: 1.5rem'>Please enter a document title.</p>`,
+              icon: 'info',
+              width: '50rem',
+            });
             return;
           }
           
@@ -1128,131 +1141,165 @@ document.addEventListener("DOMContentLoaded", () => {
 
           if (sections.length === 0) {
          
-            alert("Please add at least one section to the document.");
+            Swal.fire({
+              title: 'Oops! We need more information.',
+              html: `<p style='font-size: 1.5rem'>Please add at least one section to the document.</p>`,
+              icon: 'info',
+              width: '50rem',
+            });
+
             return;
           }
       
-          const confirmation = confirm("Are you sure you want to submit this document?");
+          // const confirmation = confirm("Are you sure you want to submit this document?");
 
-          if (confirmation) {
-            const documentData = {
-              title: title,
-              type: type,
-              context: context,
-              sections: sections,
-            };
+          // if (confirmation) {
 
-            const opts = {
-            lines: 13, // The number of lines to draw
-            length: 20, // The length of each line
-            width: 10, // The line thickness
-            radius: 30, // The radius of the inner circle
-            scale: 1, // Scales overall size of the spinner
-            corners: 1, // Corner roundness (0..1)
-            color: "#000", // CSS color or array of colors
-            fadeColor: "transparent", // CSS color or array of colors
-            speed: 1, // Rounds per second
-            rotate: 0, // The rotation offset
-            animation: "spinner-line-fade-default", // The CSS animation name for the lines
-            direction: 1, // 1: clockwise, -1: counterclockwise
-            zIndex: 2e9, // The z-index (defaults to 2000000000)
-            className: "spinner", // The CSS class to assign to the spinner
-            top: "50%", // Top position relative to parent
-            left: "50%", // Left position relative to parent
-            shadow: "0 0 1px transparent", // Box-shadow for the lines
-            position: "absolute" // Element positioning
-          };
-          const target = document.getElementById("loadingSpinner");
-          // let spinner = new Spinner(opts).spin(target);
-          var spinner = new Spin.Spinner(opts).spin(target);
+          Swal.fire({
+                title: 'Generate Content',
+                html: `<p style='font-size: 1.5rem'>Are you sure you want to generate this document?</p>`,
+                icon: 'info',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Generate',
+                cancelButtonText: 'Cancel',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                showLoaderOnConfirm: true,
+                width: '50rem',
+                preConfirm: () => {
+                    return new Promise((resolve, reject) => {
+                      // setTimeout(() => {
+                      //     resolve();
+                      // }, 2000);
+                      const documentData = {
+                        title: title,
+                        type: type,
+                        context: context,
+                        sections: sections,
+                      };
 
-            $.ajax({
-                url: 'https://37soa.edu.gh/createdocument.php',
-                method: 'POST',
-                data: JSON.stringify(documentData),
-                success: function(response) {
-                  let doc = new docx.Document();
-
-                  let responseText = JSON.parse(response);
-
-                  // create the first section
-                  let section = {
-                    children: []
+                    const opts = {
+                    lines: 13, // The number of lines to draw
+                    length: 20, // The length of each line
+                    width: 10, // The line thickness
+                    radius: 30, // The radius of the inner circle
+                    scale: 1, // Scales overall size of the spinner
+                    corners: 1, // Corner roundness (0..1)
+                    color: "#000", // CSS color or array of colors
+                    fadeColor: "transparent", // CSS color or array of colors
+                    speed: 1, // Rounds per second
+                    rotate: 0, // The rotation offset
+                    animation: "spinner-line-fade-default", // The CSS animation name for the lines
+                    direction: 1, // 1: clockwise, -1: counterclockwise
+                    zIndex: 2e9, // The z-index (defaults to 2000000000)
+                    className: "spinner", // The CSS class to assign to the spinner
+                    top: "50%", // Top position relative to parent
+                    left: "50%", // Left position relative to parent
+                    shadow: "0 0 1px transparent", // Box-shadow for the lines
+                    position: "absolute" // Element positioning
                   };
 
-                  // loop through the responseText array and add each paragraph to the section
-                  for (let i = 0; i < responseText.length; i++) {
+                  // Swal.showLoading(); // show loader when user clicks "Filter" button
 
-                    section.children.push(
+                  $.ajax({
+                      url: 'https://37soa.edu.gh/createdocument.php',
+                      method: 'POST',
+                      data: JSON.stringify(documentData),
+                      success: function(response) {
+                        // Swal.hideLoading(); // hide loader when AJAX request is complete
+                        let doc = new docx.Document();
 
-                      new docx.Paragraph({
-                        children: [
-                          new docx.TextRun({
-                            text: (i == 0)?title:'',
-                            bold: true,
-                            size: 32,
-                            font: 'Arial',
-                          }),
-                        ],
-                        alignment: docx.AlignmentType.CENTER, // Center align the paragraph
-                        
-                      }),
+                        let responseText = JSON.parse(response);
 
-                      new docx.Paragraph({
-                        children: [
-                          new docx.TextRun({
-                            text: sections[i],
-                            bold: true,
-                            size: 32,
-                            font: 'Arial',
-                          }),
-                        ],
-                        spacing: {
-                          line: 360,
-                          before: 400,
-                          after: 0, // reduce the spacing after the heading to 0
-                        },
-                      }),
+                        // create the first section
+                        let section = {
+                          children: []
+                        };
 
-                      new docx.Paragraph({
-                        children: [
-                          new docx.TextRun({
-                            text: responseText[i][1],
-                            size: 28,
-                            font: 'Times New Roman',
-                          }),
-                        ],
-                        spacing: {
-                          line: 360,
-                          before: 0, // reduce the spacing before the response text to 0
-                          after: 400,
-                        },
-                      })
-                    );
+                        // loop through the responseText array and add each paragraph to the section
+                        for (let i = 0; i < responseText.length; i++) {
 
-                  }
+                          section.children.push(
 
-                  // add the section to the document
-                  doc.addSection(section);
+                            new docx.Paragraph({
+                              children: [
+                                new docx.TextRun({
+                                  text: (i == 0)?title:'',
+                                  bold: true,
+                                  size: 32,
+                                  font: 'Arial',
+                                }),
+                              ],
+                              alignment: docx.AlignmentType.CENTER, // Center align the paragraph
+                              
+                            }),
 
-                  docx.Packer.toBlob(doc).then(function(blob) {
-                    // Hide the loading animation
-                    // spinner.stop();
+                            new docx.Paragraph({
+                              children: [
+                                new docx.TextRun({
+                                  text: sections[i],
+                                  bold: true,
+                                  size: 32,
+                                  font: 'Arial',
+                                }),
+                              ],
+                              spacing: {
+                                line: 360,
+                                before: 400,
+                                after: 0, // reduce the spacing after the heading to 0
+                              },
+                            }),
 
-                    saveAs(blob, title + ".docx");
-                  });
-                },
-                error: function(xhr, status, error) {
-                  console.error(error);
+                            new docx.Paragraph({
+                              children: [
+                                new docx.TextRun({
+                                  text: responseText[i][1],
+                                  size: 28,
+                                  font: 'Times New Roman',
+                                }),
+                              ],
+                              spacing: {
+                                line: 360,
+                                before: 0, // reduce the spacing before the response text to 0
+                                after: 400,
+                              },
+                            })
+                          );
 
-                },
-                complete: function() {
-                  // Hide the loading spinner
-                  spinner.stop();
+                        }
+
+                        // add the section to the document
+                        doc.addSection(section);
+
+                        docx.Packer.toBlob(doc).then(function(blob) {
+                          // Hide the loading animation
+                          // spinner.stop();
+
+                          saveAs(blob, title + ".docx");
+                        });
+                      },
+                      error: function(xhr, status, error) {
+                        console.error(error);
+
+                      },
+                      complete: function() {
+                        // Swal.hideLoading(); // hide loader when AJAX request is complete
+                        resolve();
+                        // Hide the loading spinner
+                        // spinner.stop();
+                      }
+                    });
+
+                      
+                    });
                 }
-              });
-
-             }
+            }).then((result) => {
+                if (result.value) {
+                }
+            });
         });
 
       </script>
