@@ -656,7 +656,6 @@ document.addEventListener("DOMContentLoaded", () => {
             flex-wrap: wrap;
             justify-content: center;
             align-items: flex-start;
-            padding: 0 70px;
         }
 
         html{
@@ -888,14 +887,14 @@ document.addEventListener("DOMContentLoaded", () => {
           body{
             margin: 0 auto;
           }
-          
+
           .container{
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: flex-start;
-            flex-direction: column;
-        }
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+              align-items: flex-start;
+              flex-direction: column;
+          }
           
           .input-container,
           .preview-container {
@@ -965,9 +964,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       /* Add media query for larger screens */
       @media only screen and (min-width: 1024px) {
-        .container {
-          flex-direction: row-reverse;
+       
+        .container{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: row-reverse;
+            padding: 0 70px;
         }
+
         /* .child1 {
           order: 1;
           margin-right: 0;
