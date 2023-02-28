@@ -944,6 +944,13 @@ document.addEventListener("DOMContentLoaded", () => {
           max-width: none;
           font-size: 14px;
         }
+
+         #previewSections {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
+          grid-gap: 20px;
+        }
+        
       }
 
       /* Add media query for larger screens */
@@ -959,6 +966,11 @@ document.addEventListener("DOMContentLoaded", () => {
           order: 2;
         } */
       }
+      #previewSections {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 20px;
+     }
 
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.10/dist/sweetalert2.min.css">
