@@ -657,7 +657,6 @@ document.addEventListener("DOMContentLoaded", () => {
             justify-content: center;
             align-items: flex-start;
             padding: 0 70px;
-
         }
 
         html{
@@ -889,9 +888,14 @@ document.addEventListener("DOMContentLoaded", () => {
           body{
             margin: 0 auto;
           }
-          .container {
+          
+          .container{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
             flex-direction: column;
-          }
+        }
           
           .input-container,
           .preview-container {
@@ -947,6 +951,14 @@ document.addEventListener("DOMContentLoaded", () => {
           width: 90%;
           max-width: none;
           font-size: 14px;
+        }
+
+        .container{
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: flex-start;
+            flex-direction: column;
         }
         
       }
