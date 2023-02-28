@@ -938,6 +938,12 @@ document.addEventListener("DOMContentLoaded", () => {
         font-size: 16px;
       }
 
+      #previewSections {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 20px;
+     }
+
       @media screen and (max-width: 480px) {
         #popup {
           width: 90%;
@@ -966,11 +972,7 @@ document.addEventListener("DOMContentLoaded", () => {
           order: 2;
         } */
       }
-      #previewSections {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap: 20px;
-     }
+      
 
     </style>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.10/dist/sweetalert2.min.css">
