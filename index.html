@@ -938,23 +938,13 @@ document.addEventListener("DOMContentLoaded", () => {
         font-size: 16px;
       }
 
-      #previewSections {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        grid-gap: 20px;
-     }
+      
 
       @media screen and (max-width: 480px) {
         #popup {
           width: 90%;
           max-width: none;
           font-size: 14px;
-        }
-
-         #previewSections {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          grid-gap: 20px;
         }
         
       }
@@ -971,6 +961,12 @@ document.addEventListener("DOMContentLoaded", () => {
         .child2 {
           order: 2;
         } */
+
+        #previewSections {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        grid-gap: 20px;
+     }
       }
       
 
