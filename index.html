@@ -889,24 +889,7 @@ document.addEventListener("DOMContentLoaded", () => {
             margin: 0;
         }
 
-      @media only screen and (max-width: 767px) {
-          body{
-            margin: 0 auto;
-          }
-
-          .container{
-              display: flex;
-              flex-wrap: wrap;
-              justify-content: center;
-              align-items: flex-start;
-              flex-direction: column;
-          }
-          
-          .input-container,
-          .preview-container {
-            flex-basis: 100%;
-          }
-      }
+    
 
       .content {
         min-height: calc(100vh - 56px); /* 56px is the height of the fixed navbar */
@@ -964,6 +947,9 @@ document.addEventListener("DOMContentLoaded", () => {
             justify-content: center;
             align-items: flex-start;
             flex-direction: column;
+            flex-direction: row-reverse;
+
+
         }
         
       }
@@ -976,7 +962,7 @@ document.addEventListener("DOMContentLoaded", () => {
             flex-wrap: wrap;
             justify-content: center;
             align-items: flex-start;
-            flex-direction: row-reverse;
+            /* flex-direction: row-reverse; */
             padding: 0 70px;
         }
 
@@ -1016,11 +1002,10 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   .swal2-confirm,
-.swal2-cancel {
-  font-size: 12px!important;
-  padding: 0.5rem 1rem!important;
-}
-
+  .swal2-cancel {
+    font-size: 12px!important;
+    padding: 0.5rem 1rem!important;
+  }
 
   .swal2-icon svg{
     width: 1em!important;
@@ -1033,6 +1018,27 @@ document.addEventListener("DOMContentLoaded", () => {
     font-size: 1.5rem;
   }
 }
+
+@media only screen and (max-width: 767px) {
+          body{
+            margin: 0 auto;
+          }
+
+          .container{
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+              align-items: flex-start;
+              flex-direction: column;
+              /* flex-direction: row-reverse; */
+
+          }
+          
+          .input-container,
+          .preview-container {
+            flex-basis: 100%;
+          }
+      }
 
     </style>
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.10/dist/sweetalert2.min.css">
@@ -1065,15 +1071,7 @@ document.addEventListener("DOMContentLoaded", () => {
   
     <div class="container">
 
-      <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; width:100%" class="preview-container">
-        <h1 >Preview</h1>
-        <h2 id="previewTitle"></h2>
-        <h2 id="previewType"></h2>
-        <h3 id="previewContext"></h3>
-        <div id="previewSections"></div>
-        <button id="submit">Generate Content</button>
-        
-      </div>
+
 
       <div class="input-container" style="display: flex; align-items: center; justify-content: center; flex-direction: column; width:100%">
           <h1 style="text-align:center">Create Document</h1>
@@ -1090,6 +1088,16 @@ document.addEventListener("DOMContentLoaded", () => {
             <button id="open-popup">Click me to open the pop-up!</button>
           </div>
 
+        </div>
+
+        <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; width:100%" class="preview-container">
+          <h1 >Preview</h1>
+          <h2 id="previewTitle"></h2>
+          <h2 id="previewType"></h2>
+          <h3 id="previewContext"></h3>
+          <div id="previewSections"></div>
+          <button id="submit">Generate Content</button>
+          
         </div>
 
 
