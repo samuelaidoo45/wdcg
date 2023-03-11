@@ -1057,6 +1057,8 @@ document.addEventListener("DOMContentLoaded", () => {
     <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
     <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
+
 </head>
 <body> 
     <header>
@@ -1146,6 +1148,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         popupContainer.style.display = "block";
 
+        const converter = new showdown.Converter();
 
         openPopupButton.addEventListener("click",()=>{
           popupContainer.style.display = "block";
@@ -1381,7 +1384,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                   text: (i == 0)?title:'',
                                   bold: true,
                                   size: 32,
-                                  font: 'Arial',
+                                  font: 'Times New Roman',
                                 }),
                               ],
                               alignment: docx.AlignmentType.CENTER, // Center align the paragraph
@@ -1394,7 +1397,7 @@ document.addEventListener("DOMContentLoaded", () => {
                                   text: sections[i],
                                   bold: true,
                                   size: 32,
-                                  font: 'Arial',
+                                  font: 'Times New Roman',
                                 }),
                               ],
                               spacing: {
@@ -1403,11 +1406,12 @@ document.addEventListener("DOMContentLoaded", () => {
                                 after: 0, // reduce the spacing after the heading to 0
                               },
                             }),
+                             
 
                             new docx.Paragraph({
                               children: [
                                 new docx.TextRun({
-                                  text: responseText[i][1],
+                                  text: converter.makeHtml(responseText[i][1]),
                                   size: 28,
                                   font: 'Times New Roman',
                                 }),
