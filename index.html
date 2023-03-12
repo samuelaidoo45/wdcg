@@ -1273,6 +1273,29 @@ document.addEventListener("DOMContentLoaded", () => {
             previewSections.appendChild(sectionDiv);
           });
         }
+
+          function splitParagraphs(htmlString) {
+              // Remove any line breaks and trim the input string
+              const trimmedString = htmlString.replace(/\r?\n|\r/g, '').trim();
+              
+              // Split the string into paragraphs
+              const paragraphs = trimmedString.split('<p>');
+              
+              // Remove the first empty element from the array
+              paragraphs.shift();
+              
+              // Remove the closing tag from the last element of the array
+              const lastParagraph = paragraphs[paragraphs.length - 1];
+              paragraphs[paragraphs.length - 1] = lastParagraph.slice(0, lastParagraph.length - 4);
+              
+              // Remove any remaining HTML tags from each paragraph
+              const plainTextParagraphs = paragraphs.map((paragraph) => {
+                return paragraph.replace(/<\/?[^>]+(>|$)/g, '');
+              });
+        
+          return plainTextParagraphs;
+        }
+
       
         submitButton.addEventListener("click", () => {
 
@@ -1366,69 +1389,148 @@ document.addEventListener("DOMContentLoaded", () => {
                         // Swal.hideLoading(); // hide loader when AJAX request is complete
                         let doc = new docx.Document();
 
+
+
                         let responseText = JSON.parse(response);
 
-                        // create the first section
-                        let section = {
-                          children: []
-                        };
-
-                        // loop through the responseText array and add each paragraph to the section
+                        // loop through the responseText array and add each paragraph to the document
                         for (let i = 0; i < responseText.length; i++) {
 
-                          section.children.push(
-
-                            new docx.Paragraph({
-                              children: [
-                                new docx.TextRun({
-                                  text: (i == 0)?title:'',
-                                  bold: true,
-                                  size: 32,
-                                  font: 'Times New Roman',
-                                }),
-                              ],
-                              alignment: docx.AlignmentType.CENTER, // Center align the paragraph
-                              
-                            }),
+                          console.log(converter.makeHtml(responseText[i][1]));
 
 
-                            new docx.Paragraph({
-                              children: [
-                                new docx.TextRun({
-                                  text: sections[i],
-                                  bold: true,
-                                  size: 32,
-                                  font: 'Times New Roman',
-                                }),
-                              ],
-                              spacing: {
-                                line: 360,
-                                before: 400,
-                                after: 0, // reduce the spacing after the heading to 0
-                              },
-                            }),
-                             
+                          let paragraphs = splitParagraphs(converter.makeHtml(responseText[i][1]));
 
-                            new docx.Paragraph({
-                              children: [
-                                new docx.TextRun({
-                                  text: (converter.makeHtml(responseText[i][1])),
-                                  size: 28,
-                                  font: 'Times New Roman',
-                                }),
-                              ],
-                              spacing: {
-                                line: 360,
-                                before: 0, // reduce the spacing before the response text to 0
-                                after: 400,
-                              },
-                            })
-                          );
+                          // create the section
+                          let section = {
+                            children: [
+                              // add the title once at the beginning of the section
+                              new docx.Paragraph({
+                                children: [
+                                  new docx.TextRun({
+                                    text: (i== 0)?title:'',
+                                    bold: true,
+                                    size: 32,
+                                    font: 'Times New Roman',
+                                  }),
+                                ],
+                                alignment: docx.AlignmentType.CENTER, // Center align the paragraph
+                              }),
 
+                              // add the section heading once at the beginning of the section
+                              new docx.Paragraph({
+                                children: [
+                                  new docx.TextRun({
+                                    text: sections[i],
+                                    bold: true,
+                                    size: 32,
+                                    font: 'Times New Roman',
+                                  }),
+                                ],
+                                spacing: {
+                                  line: 360,
+                                  before: 400,
+                                  after: 0, // reduce the spacing after the heading to 0
+                                },
+                              }),
+                            ],
+                          };
+
+                          // loop through the paragraphs and add them to the section
+                          for (let j = 0; j < paragraphs.length; j++) {
+                            section.children.push(
+                              new docx.Paragraph({
+                                children: [
+                                  new docx.TextRun({
+                                    text: paragraphs[j],
+                                    size: 28,
+                                    font: 'Times New Roman',
+                                  }),
+                                ],
+                                spacing: {
+                                  line: 360,
+                                  before: 0, // reduce the spacing before the response text to 0
+                                  after: 400,
+                                },
+                              })
+                            );
+                          }
+
+                          // add the section to the document
+                          doc.addSection(section);
                         }
 
+
+                      //   // create the first section
+
+
+                      //   // loop through the responseText array and add each paragraph to the section
+                      //   for (let i = 0; i < responseText.length; i++) {
+
+                      //     let paragraphs = splitParagraphs(converter.makeHtml(responseText[i][1]));
+                          
+                      //     let section = {
+                      //         children: []
+                      //       };
+
+                      //     for (let j = 0; j < paragraphs.length; j++) {
+
+                          
+
+                      //       section.children.push(
+
+                      //         new docx.Paragraph({
+                      //           children: [
+                      //             new docx.TextRun({
+                      //               text: (i == 0)?title:'',
+                      //               bold: true,
+                      //               size: 32,
+                      //               font: 'Times New Roman',
+                      //             }),
+                      //           ],
+                      //           alignment: docx.AlignmentType.CENTER, // Center align the paragraph
+                                
+                      //         }),
+
+
+                      //         new docx.Paragraph({
+                      //           children: [
+                      //             new docx.TextRun({
+                      //               text: sections[i],
+                      //               bold: true,
+                      //               size: 32,
+                      //               font: 'Times New Roman',
+                      //             }),
+                      //           ],
+                      //           spacing: {
+                      //             line: 360,
+                      //             before: 400,
+                      //             after: 0, // reduce the spacing after the heading to 0
+                      //           },
+                      //         }),
+                              
+
+                      //         new docx.Paragraph({
+                      //           children: [
+                      //             new docx.TextRun({
+                      //               text: paragraphs[j],
+                      //               size: 28,
+                      //               font: 'Times New Roman',
+                      //             }),
+                      //           ],
+                      //           spacing: {
+                      //             line: 360,
+                      //             before: 0, // reduce the spacing before the response text to 0
+                      //             after: 400,
+                      //           },
+                      //         })
+                      //       );
+
+                      //   }
+                      //   doc.addSection(section);
+                      // }
+
                         // add the section to the document
-                        doc.addSection(section);
 
                         docx.Packer.toBlob(doc).then(function(blob) {
                           // Hide the loading animation
@@ -1459,6 +1561,7 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
       </script>
+     
       <script type="module">
         // Import the functions you need from the SDKs you need
         import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
