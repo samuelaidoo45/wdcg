@@ -1,538 +1,442 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-	<title>AI Content Generator</title>
-    <link rel="stylesheet" href="spin.css">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Generate content for your next word document">
-    <style>
-
-        .swal2-popup {
-          width: auto!important;
-          height: auto!important;
-        }
-        
-        .container{
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: flex-start;
-        }
-
-        html{
-          height: 100%;
-        }
-
-        body{
-          margin: 0;
-          min-height: 100%;
-          display: flex;
-          flex-direction: column;
-        }
-
-        /*.sidebar{
-            flex-basis: 20%;
-            padding: 1rem;
-            box-sizing: border-box;            
-        }
-        */
-        .input-container {
-            flex-basis: 50%;
-            padding: 1rem;
-            box-sizing: border-box;
-        }
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/> 
+    <meta name="description" content="Generate content for your next Word document">
+    <title>Word Document Content Generator</title>
     
-        .input-container h1 {
-            margin-bottom: 2rem;
-        }
-    
-        .input-container label {
-            display: block;
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-        }
-    
-        .input-container input,
-        .input-container textarea {
-            width: 100%;
-            padding: 0.5rem;
-            margin-bottom: 1rem;
-            box-sizing: border-box;
-            border-radius: 4px;
-            border: 1px solid #ccc;
-        }
-    
-        .input-container textarea {
-            height: 10rem;
-            resize: vertical;
-        }
-    
-        .input-container button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-    
-        .preview-container {
-            flex-basis: 50%;
-            padding: 1rem;
-            box-sizing: border-box;
-            text-align: center;
-        }
-    
-        .preview-container h1 {
-            margin-bottom: 2rem;
-        }
-    
-        .preview-container h2 {
-            margin-bottom: 1rem;
-        }
-    
-        .preview-container section {
-            margin-bottom: 2rem;
-            padding: 1rem;
-            background-color: #f2f2f2;
-            border-radius: 4px;
-        }
-    
-        .preview-container section h2 {
-            margin-bottom: 0.5rem;
-        }
-    
-        .preview-container section p {
-            margin-bottom: 1rem;
-        }
-    
-        .preview-container button {
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-top: 2rem;
-        }
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin> 
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
 
-        #popup-container {
-          display: none;
-          position: fixed;
-          top: 0;
-          left: 0;
-          width: 100%;
-          height: 100%;
-          background-color: rgba(0,0,0,0.5);
-          z-index: 1;
-        }
-
-        #popup {
-          position: fixed;
-          top: 50%;
-          left: 50%;
-          transform: translate(-50%, -50%);
-          background-color: white;
-          padding: 20px;
-          border-radius: 5px;
-        }
-
-        #close-popup {
-          display: block;
-          margin-top: 10px;
-          background-color: #337ab7;
-          color: white;
-          padding: 5px 10px;
-          border-radius: 3px;
-          border: none;
-          cursor: pointer;
-        }
-
-        /* Navbar styles */
-        /* nav {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          background-color: #333;
-          color: #fff;
-          padding: 10px;
-        }
-
-        nav ul {
-          display: flex;
-          list-style: none;
-          margin: 0;
-          padding: 0;
-        }
-
-        nav ul li {
-          margin-right: 20px;
-          margin-left: 0;
-        }
-
-        nav a {
-          color: #fff;
-          text-decoration: none;
-          font-size: 18px;
-          font-weight: bold;
-        }
-
-        footer {
-          background-color: #f2f2f2;
-          padding: 1em;
-          text-align: center;
-        } */
-
-
-        /* Navigation styles */
-        nav {
-          background-color: #333;
-          height: 50px;
-          display: flex;
-          justify-content: flex-end;
-          align-items: center;
-        }
-
-        nav ul {
-          list-style: none;
-          margin: 0;
-          padding: 0;
-        }
-
-        nav ul li {
-          float: right;
-          margin-right: 15px;
-        }
-
-        nav ul li a {
-          display: block;
-          color: white;
-          text-decoration: none;
-          padding: 0 10px;
-          line-height: 50px;
-        }
-
-        /* Footer styles */
-        footer {
-          background-color: #ddd;
-          height: 50px;
-          display: flex;
-          justify-content: center;
-          align-items: center;
-        }
-
-        footer {
-          height: 60px; /* set fixed height for footer */
-          position: fixed;
-          bottom: 0;
-          width: 100%;
-          background-color: #333;
-          color: #fff;
-          text-align: center;
-        }
-
-        footer {
-          display: flex;
-          flex-direction: column;
-          justify-content: center;
-          align-items: center;
-          height: 100px;
-          background-color: #eee;
-        }
-
-        footer p {
-            margin: 0;
-        }
-
-    
-
-      .content {
-        min-height: calc(100vh - 56px); /* 56px is the height of the fixed navbar */
-      }
-
-      body {
-      /* Set the minimum height of the page to 100% */
-      min-height: 100%;
-      /* Position the content area using flexbox */
-      display: flex;
-      flex-direction: column;
-      }
-
-      main {
-        /* Set the main content area to grow to fill the available space */
-        flex-grow: 1;
-      }
-
-      footer {
-        /* Set the footer to be positioned at the bottom of the page */
-        position: relative;
-        bottom: 0;
-        width: 100%;
-        background-color: #333;
-        color: #fff;
-        margin-top: auto;
-      }
-
-      #popup {
-        position: fixed;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        width: 80%;
-        max-width: 400px;
-        background-color: #fff;
-        padding: 20px;
-        box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-        text-align: center;
-        font-size: 16px;
-      }
-
-      
-
-      @media screen and (max-width: 480px) {
-        #popup {
-          width: 90%;
-          max-width: none;
-          font-size: 14px;
-        }
-
-        .container{
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: flex-start;
-            flex-direction: column;
-            flex-direction: row-reverse;
-
-
-        }
-        
-      }
-
-      /* Add media query for larger screens */
-      @media only screen and (min-width: 1024px) {
-       
-        .container{
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: flex-start;
-            /* flex-direction: row-reverse; */
-            padding: 0 70px;
-        }
-
-        /* .child1 {
-          order: 1;
-          margin-right: 0;
-        }
-        .child2 {
-          order: 2;
-        } */
-
-        #previewSections {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-gap: 20px;
-        }
-      }
-
-      
-      /* Add this CSS to your stylesheet */
-@media only screen and (max-width: 767px) {
-  .message {
-    font-size: 1rem;
-  }
-  .swal2-popup {
-    height: auto!important;
-    max-width: 500px!important;
-    width: 80% !important;
-    font-size: 14px;
-    padding: 0.5rem;
-    width: 80%;
-  }
-
-  .swal2-title,
-  .swal2-content {
-    font-size: 14px!important;
-  }
-
-  .swal2-confirm,
-  .swal2-cancel {
-    font-size: 12px!important;
-    padding: 0.5rem 1rem!important;
-  }
-
-  .swal2-icon svg{
-    width: 1em!important;
-    height: 1em!important;
-  }
-}
-
-@media only screen and (min-width: 601px) {
-  .message {
-    font-size: 1.5rem;
-  }
-}
-
-@media only screen and (max-width: 767px) {
-          body{
-            margin: 0 auto;
-          }
-
-          .container{
-              display: flex;
-              flex-wrap: wrap;
-              justify-content: center;
-              align-items: flex-start;
-              flex-direction: column;
-              /* flex-direction: row-reverse; */
-
-          }
-          
-          .input-container,
-          .preview-container {
-            flex-basis: 100%;
-          }
-      }
-
-    </style>
-    <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.10/dist/sweetalert2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.10/dist/sweetalert2.min.js"></script> -->
-    
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.2/sweetalert.min.js"></script> -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/docx@7.8.2/build/index.min.js"></script>
     <script src="https://unpkg.com/docx@5.0.2/build/index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
-    <!-- <script src="spin.js">
-    </script> -->
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script> -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script> -->
     <script src="https://cdn.jsdelivr.net/npm/showdown@1.9.1/dist/showdown.min.js"></script>
 
+    <style>
+        body {
+            font-family: 'Nunito', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            color: #4a4a4a;
+        }
+
+        /* Navigation Bar */
+        header {
+            background: #ffffffaa;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 1px 6px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        nav {
+            height: 60px;
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        nav ul li a {
+            color: #333;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li a:hover {
+            color: #3B82F6;
+        }
+
+        /* Main Container */
+        .content-wrapper {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 2rem 1rem;
+        }
+
+        .heading-intro {
+            text-align: center;
+            max-width: 600px;
+            margin-bottom: 3rem;
+        }
+
+        .heading-intro h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 0 1rem 0;
+            color: #2f2f2f;
+        }
+
+        .heading-intro p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        /* Container for input and preview */
+        .main-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            width: 100%;
+            max-width: 1200px;
+            justify-content: center;
+        }
+
+        /* Card Styles */
+        .card {
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.07);
+            padding: 2rem;
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #2c2c2c;
+            text-align: center;
+        }
+
+        .card label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+            margin-top: 1.5rem; /* Add space above each label for better spacing */
+        }
+
+        .card input, .card textarea {
+            width: 90%;
+            padding: 0.75rem 1rem;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-family: 'Nunito', sans-serif;
+            margin-bottom: 1rem; /* Slightly reduce this if you want less spacing between fields */
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+            background: #f9fafb;
+        }
+
+        .card input:focus,
+        .card textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            background: #fff;
+        }
+
+        /* Buttons */
+        button {
+            background-color: #3b82f6;
+            color: #fff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            font-size: 1rem;
+        }
+
+        button:hover {
+            background-color: #2563eb;
+        }
+
+        button:active {
+            transform: scale(0.98);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        /* Preview Container */
+        .preview-container h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            text-align: center;
+        }
+
+        .preview-section {
+            background-color: #f3f4f6;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .preview-section h4 {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .preview-section p {
+            margin: 0;
+            font-size: 1rem;
+            color: #4b5563;
+            line-height: 1.5;
+        }
+
+        .preview-section .section-buttons {
+            margin-top: 1rem;
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .preview-section .section-buttons button {
+            background-color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .preview-section .section-buttons button:hover {
+            background-color: #475569;
+        }
+
+        /* Popup Styles */
+        #popup-container {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.4);
+            z-index: 9999;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        #popup {
+            background: #fff;
+            border-radius: 12px;
+            padding: 2rem;
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+        }
+
+        #popup h2 {
+            margin-top: 0;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-weight: 700;
+            color: #1f2937;
+        }
+
+        #popup p {
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+            color: #4b5563;
+        }
+
+        #close-popup {
+            background-color: #3b82f6;
+        }
+
+        #close-popup:hover {
+            background-color: #2563eb;
+        }
+
+        /* Loading Overlay */
+        #loading-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+            z-index: 99999;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 6px solid #fff;
+            border-top: 6px solid #3b82f6;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Footer */
+        footer {
+            background-color: #ffffffaa;
+            backdrop-filter: blur(10px);
+            padding: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: #666;
+            margin-top: auto;
+            border-top: 1px solid #e5e7eb;
+        }
+
+        footer a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive */
+        @media (max-width: 767px) {
+            .main-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
 </head>
 <body> 
     <header>
       <nav>
         <ul>
-          <li><a href="#">Signup</a></li>
-          <li><a href="#">Login</a></li>
           <li><a href="#">Home</a></li>
+          <li><a href="#">Login</a></li>
+          <li><a href="#">Signup</a></li>
         </ul>
       </nav>
     </header>
   
-    <div class="container">
-
-
-
-      <div class="input-container" style="display: flex; align-items: center; justify-content: center; flex-direction: column; width:100%">
-          <h1 style="text-align:center">Create Document</h1>
-          <label for="title">Title:</label>
-          <input type="text" id="title" placeholder="What is the document about? (e.g. Marketing Plan for New Product Launch)">
-          <!-- <label for="type">Type:</label>
-          <input type="text" id="type" placeholder="Enter document type"> -->
-          <label for="context">Context:</label>
-          <textarea id="context" placeholder="What is the main issue the document is addressing? (e.g. Lack of Access to Healthcare)"></textarea>
-          <label for="section">Section:</label>
-          <textarea id="section" placeholder="What are the main sections of your document? (e.g. Executive Summary, Methodology, Results)"></textarea>
-          <div>
-            <button id="addSection">Add Section</button>
-            <button id="open-popup">Click me to open the pop-up!</button>
-          </div>
-
+    <div class="content-wrapper">
+        <div class="heading-intro">
+            <h1>Craft Your Document Effortlessly</h1>
+            <p>Welcome! Create, preview, and download high-quality Word documents in just a few clicks. Perfect for students, professionals, and anyone who needs a polished document quickly.</p>
         </div>
 
-        <div style="display: flex; align-items: center; justify-content: center; flex-direction: column; width:100%" class="preview-container">
-          <h1 >Preview</h1>
-          <h2 id="previewTitle"></h2>
-          <h2 id="previewType"></h2>
-          <h3 id="previewContext"></h3>
-          <div id="previewSections"></div>
-          <button id="submit">Generate Content</button>
-          
+        <div class="main-container">
+            <div class="card input-container">
+                <h2>Document Details</h2>
+                <label for="title">Title For the Document:</label>
+                <input type="text" id="title" placeholder="e.g. Marketing Plan for Launch">
+
+                <label for="context">Context(What the document is about):</label>
+                <textarea id="context" placeholder="Main issue or context..."></textarea>
+
+                <label for="section">Add a Section:</label>
+                <textarea id="section" placeholder="e.g. Executive Summary, Methodology"></textarea>
+                <div class="button-group">
+                    <button id="addSection">Add Section</button>
+                    <button id="open-popup">App Info</button>
+                </div>
+            </div>
+
+            <div class="card preview-container">
+                <h2>Live Preview</h2>
+                <h3 id="previewTitle"></h3>
+                <h4 id="previewContext" style="font-weight:600; text-align:center; color:#666;"></h4>
+                <div id="previewSections"></div>
+                <button id="submit" style="margin-top: 1rem; background-color:#10b981;">Generate Content</button>
+            </div>
         </div>
-
-
-       
     </div>
 
     <div id="popup-container">
       <div id="popup">
-        <h2>Welcome to our app!</h2>
-        <p style="text-align: justify;">Welcome to our app! We're thrilled to have you here and we can't wait to show you what we've created. Our app is a powerful content generator designed to help you create high-quality Word documents quickly and easily. Whether you're a student, a professional, or someone who just needs to write a letter, our app can help you create great content in no time. We're committed to making our app the best it can be, so if you have any feedback or questions, please let us know on <a>samuelaidoo45@gmail.com</a> and <a href="https://forms.gle/EycQ1LMqK9d1bA4LA">Please provide feedback</a>. Thanks for choosing our app and happy creating!</p>
+        <h2>Welcome to Our App!</h2>
+        <p>
+          We're excited to help you create high-quality Word documents quickly and easily. Whether you're a student writing a report or a professional drafting a proposal, our app streamlines the process.
+          <br><br>
+          Got feedback? Reach us at <a href="mailto:samuelaidoo45@gmail.com" style="color:#3b82f6; text-decoration:none;">samuelaidoo45@gmail.com</a> or fill out our <a href="https://forms.gle/EycQ1LMqK9d1bA4LA" style="color:#3b82f6; text-decoration:none;">feedback form</a>.
+          <br><br>
+          Thanks for choosing our app—happy creating!
+        </p>
         <button id="close-popup">Close</button>
       </div>
     </div>
 
-    <div id="loadingSpinner"></div>
-  
-    <!-- <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
+    <!-- Loading Overlay -->
+    <div id="loading-overlay">
+      <div class="spinner"></div>
+    </div>
 
+    <footer>
+      <p>&copy; 2023. All rights reserved. Follow us on <a href="https://twitter.com/_samuelaidoo">Twitter</a></p>
+    </footer> 
 
-
-    <!-- Include the spin.js library -->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/spin.js/2.3.2/spin.min.js"></script> -->
-
-    <!-- Include the spin.js CSS -->
     <script>
         const titleInput = document.getElementById("title");
-        const typeInput = document.getElementById("type");
         const contextInput = document.getElementById("context");
         const sectionInput = document.getElementById("section");
         const addSectionButton = document.getElementById("addSection");
         const previewTitle = document.getElementById("previewTitle");
-        const previewType = document.getElementById("previewType");
         const previewContext = document.getElementById("previewContext");
         const previewSections = document.getElementById("previewSections");
         const submitButton = document.getElementById("submit");
-      
-        let title = "";
-        let type = "";
-        let context = "";
-        let sections = [];
-
-
         const openPopupButton = document.getElementById("open-popup");
         const closePopupButton = document.getElementById("close-popup");
         const popupContainer = document.getElementById("popup-container");
+        const loadingOverlay = document.getElementById("loading-overlay");
 
-        popupContainer.style.display = "block";
+        let title = "";
+        let context = "";
+        let sections = [];
+
+        // Show popup by default
+        popupContainer.style.display = "flex";
 
         const converter = new showdown.Converter();
 
-        openPopupButton.addEventListener("click",()=>{
-          popupContainer.style.display = "block";
+        openPopupButton.addEventListener("click", () => {
+          popupContainer.style.display = "flex";
         })
-
 
         closePopupButton.addEventListener("click", () => {
           popupContainer.style.display = "none";
         });
 
-
         titleInput.addEventListener("input", (event) => {
           title = event.target.value;
-          previewTitle.innerText =`Title: ${title}`;
+          previewTitle.innerText = title.trim() !== "" ? title : "";
         });
-      
-        // typeInput.addEventListener("input", (event) => {
-        //   type = event.target.value;
-        //   previewType.innerText = `Document Type: ${type}`;
-        // })
 
         contextInput.addEventListener("input", (event) => {
           context = event.target.value;
-          previewContext.innerText = `Context: ${context}`;
-        })
-      
+          previewContext.innerText = context.trim() !== "" ? `Context: ${context}` : "";
+        });
+
         addSectionButton.addEventListener("click", () => {
-          const section = sectionInput.value;
-          if (section.trim() !== "") {
+          const section = sectionInput.value.trim();
+          if (section !== "") {
             sections.push(section);
             renderSections();
             sectionInput.value = "";
@@ -543,44 +447,31 @@
           previewSections.innerHTML = "";
           sections.forEach((section, index) => {
             const sectionDiv = document.createElement("div");
-            const sectionHeader = document.createElement("h2");
+            sectionDiv.classList.add("preview-section");
+
+            const sectionHeader = document.createElement("h4");
+            sectionHeader.innerText = `Section ${index + 1}`;
             const sectionText = document.createElement("p");
+            sectionText.innerText = section;
+
+            const buttonDiv = document.createElement("div");
+            buttonDiv.classList.add("section-buttons");
             const editButton = document.createElement("button");
             const deleteButton = document.createElement("button");
 
-            editButton.style.marginLeft = '10px';
-            deleteButton.style.marginLeft = '10px';
-
-      
-            sectionHeader.innerText = `Section ${index + 1}`;
-            sectionText.innerText = section;
             editButton.innerText = "Edit";
-            // editButton.addEventListener("click", () => {
-
-              // const newSection = prompt("Enter new section text:", section);
-              // if (newSection !== null && newSection.trim() !== "") {
-              //   sections[index] = newSection;
-              //   renderSections();
-              // }
-
-
-            // });
-
             editButton.addEventListener("click", () => {
               Swal.fire({
-                title: 'Enter new section text:',
-                input: 'text',
+                title: 'Edit Section',
+                input: 'textarea',
                 inputValue: section,
                 showCancelButton: true,
                 confirmButtonText: 'Save',
-                cancelButtonText: 'Cancel',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                allowEnterKey: false,
+                cancelButtonText: 'Cancel'
               }).then((result) => {
                 if (result.isConfirmed) {
-                  const newSection = result.value;
-                  if (newSection !== null && newSection.trim() !== "") {
+                  const newSection = (result.value || "").trim();
+                  if (newSection !== "") {
                     sections[index] = newSection;
                     renderSections();
                   }
@@ -589,363 +480,189 @@
             });
 
             deleteButton.innerText = "Delete";
+            deleteButton.style.backgroundColor = "#ef4444";
             deleteButton.addEventListener("click", () => {
-            // const confirmDelete = confirm("Are you sure you want to delete this section?");
-
-
-            Swal.fire({
-                  title: 'Delete!',
-                  html: `<p class="message">Are you sure you want to delete this section?"</p>`,
-                  icon: 'info',
-                  showCancelButton: true,
-                  confirmButtonColor: '#3085d6',
-                  cancelButtonColor: '#d33',
-                  confirmButtonText: 'Delete',
-                  cancelButtonText: 'Cancel',
-                  allowOutsideClick: false,
-                  allowEscapeKey: false,
-                  allowEnterKey: false,
-                  showLoaderOnConfirm: true,
-                  // preConfirm: () => {
-                  //     return new Promise((resolve, reject) => {
-
-
-                  //     })
-                  // }
-                }).then((result) => {
-                  if (result.value) {
-                    sections.splice(index, 1);
-                    renderSections();
-                  }
-                });
-
+              Swal.fire({
+                title: 'Delete Section',
+                html: `<p>Are you sure you want to delete this section?</p>`,
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3b82f6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Delete',
+                cancelButtonText: 'Cancel'
+              }).then((result) => {
+                if (result.value) {
+                  sections.splice(index, 1);
+                  renderSections();
+                }
+              });
             });
-      
+
+            buttonDiv.appendChild(editButton);
+            buttonDiv.appendChild(deleteButton);
+
             sectionDiv.appendChild(sectionHeader);
             sectionDiv.appendChild(sectionText);
-            sectionDiv.appendChild(editButton);
-            sectionDiv.appendChild(deleteButton);
+            sectionDiv.appendChild(buttonDiv);
             previewSections.appendChild(sectionDiv);
           });
         }
 
-          function splitParagraphs(htmlString) {
-              // Remove any line breaks and trim the input string
-              const trimmedString = htmlString.replace(/\r?\n|\r/g, '').trim();
-              
-              // Split the string into paragraphs
-              const paragraphs = trimmedString.split('<p>');
-              
-              // Remove the first empty element from the array
-              paragraphs.shift();
-              
-              // Remove the closing tag from the last element of the array
-              const lastParagraph = paragraphs[paragraphs.length - 1];
-              paragraphs[paragraphs.length - 1] = lastParagraph.slice(0, lastParagraph.length - 4);
-              
-              // Remove any remaining HTML tags from each paragraph
-              const plainTextParagraphs = paragraphs.map((paragraph) => {
-                return paragraph.replace(/<\/?[^>]+(>|$)/g, '');
-              });
-        
+        function splitParagraphs(htmlString) {
+          const trimmedString = htmlString.replace(/\r?\n|\r/g, '').trim();
+          const paragraphs = trimmedString.split('<p>');
+          paragraphs.shift();
+          const lastParagraph = paragraphs[paragraphs.length - 1];
+          paragraphs[paragraphs.length - 1] = lastParagraph.slice(0, lastParagraph.length - 4);
+          const plainTextParagraphs = paragraphs.map((paragraph) => {
+            return paragraph.replace(/<\/?[^>]+(>|$)/g, '');
+          });
           return plainTextParagraphs;
         }
 
-      
         submitButton.addEventListener("click", () => {
-
-
           if (title.trim() === "") {
-           
             Swal.fire({
-              title: 'Oops! We need more information.',
-              html: `<p class="message">Please enter a document title.</p>`,
+              title: 'Missing Information',
+              html: `<p>Please enter a document title.</p>`,
               icon: 'info',
             });
             return;
           }
-          
-          // if (type.trim() === "") {
-          
-          //   alert("Please enter a document type.");
-          //   return;
-          // }
 
           if (sections.length === 0) {
-         
-            // Swal.fire({
-            //   title: 'Oops! We need more information.',
-            //   html: `<p style='font-size: 1.5rem'>Please add at least one section to the document.</p>`,
-            //   icon: 'info',
-            // });
-
             Swal.fire({
-              title: 'Oops! We need more information.',
-              html: '<p class="message">Please add at least one section to the document.</p>',
+              title: 'No Sections',
+              html: '<p>Please add at least one section to the document.</p>',
               icon: 'info'
             });
-
             return;
           }
 
           Swal.fire({
-                title: 'Generate Content',
-                html: `<p class="message">Are you sure you want to generate this document?</p>`,
-                icon: 'info',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Generate',
-                cancelButtonText: 'Cancel',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                allowEnterKey: false,
-                showLoaderOnConfirm: true,
-                width: '50rem',
-                preConfirm: () => {
-                 
-                }
-            }).then((result) => {
-                if (result.value) {
-                  return new Promise((resolve, reject) => {
-                      // setTimeout(() => {
-                      //     resolve();
-                      // }, 2000);
-                      const documentData = {
-                        title: title,
-                        type: type,
-                        context: context,
-                        sections: sections,
-                      };
+            title: 'Generate Content',
+            html: `<p>Are you sure you want to generate this document?</p>`,
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3b82f6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Generate',
+            cancelButtonText: 'Cancel',
+            allowOutsideClick: false,
+            allowEscapeKey: false,
+            allowEnterKey: false,
+            showLoaderOnConfirm: true,
+          }).then((result) => {
+            if (result.value) {
+              // Show loading overlay
+              loadingOverlay.style.display = "flex";
 
-                    const opts = {
-                    lines: 13, // The number of lines to draw
-                    length: 20, // The length of each line
-                    width: 10, // The line thickness
-                    radius: 30, // The radius of the inner circle
-                    scale: 1, // Scales overall size of the spinner
-                    corners: 1, // Corner roundness (0..1)
-                    color: "#000", // CSS color or array of colors
-                    fadeColor: "transparent", // CSS color or array of colors
-                    speed: 1, // Rounds per second
-                    rotate: 0, // The rotation offset
-                    animation: "spinner-line-fade-default", // The CSS animation name for the lines
-                    direction: 1, // 1: clockwise, -1: counterclockwise
-                    zIndex: 2e9, // The z-index (defaults to 2000000000)
-                    className: "spinner", // The CSS class to assign to the spinner
-                    top: "50%", // Top position relative to parent
-                    left: "50%", // Left position relative to parent
-                    shadow: "0 0 1px transparent", // Box-shadow for the lines
-                    position: "absolute" // Element positioning
-                  };
+              return new Promise((resolve) => {
+                const documentData = {
+                  title: title,
+                  type: "",
+                  context: context,
+                  sections: sections,
+                };
 
-                  // Swal.showLoading(); // show loader when user clicks "Filter" button
+                $.ajax({
+                  url: 'https://tivateonline.com/createdocument.php',
+                  method: 'POST',
+                  data: JSON.stringify(documentData),
+                  success: function(response) {
+                    let doc = new docx.Document();
+                    let responseText = JSON.parse(response);
 
-                  $.ajax({
-                      url: 'https://tivateonline.com/createdocument.php',
-                      method: 'POST',
-                      data: JSON.stringify(documentData),
-                      success: function(response) {
-                        // Swal.hideLoading(); // hide loader when AJAX request is complete
-                        let doc = new docx.Document();
+                    for (let i = 0; i < responseText.length; i++) {
+                      let paragraphs = splitParagraphs(converter.makeHtml(responseText[i][1]));
 
-
-
-                        let responseText = JSON.parse(response);
-
-                        // loop through the responseText array and add each paragraph to the document
-                        for (let i = 0; i < responseText.length; i++) {
-
-                          console.log(converter.makeHtml(responseText[i][1]));
-
-
-                          let paragraphs = splitParagraphs(converter.makeHtml(responseText[i][1]));
-
-                          // create the section
-                          let section = {
+                      let section = {
+                        children: [
+                          new docx.Paragraph({
                             children: [
-                              // add the title once at the beginning of the section
-                              new docx.Paragraph({
-                                children: [
-                                  new docx.TextRun({
-                                    text: (i== 0)?title:'',
-                                    bold: true,
-                                    size: 32,
-                                    font: 'Times New Roman',
-                                  }),
-                                ],
-                                alignment: docx.AlignmentType.CENTER, // Center align the paragraph
-                              }),
-
-                              // add the section heading once at the beginning of the section
-                              new docx.Paragraph({
-                                children: [
-                                  new docx.TextRun({
-                                    text: sections[i],
-                                    bold: true,
-                                    size: 32,
-                                    font: 'Times New Roman',
-                                  }),
-                                ],
-                                spacing: {
-                                  line: 360,
-                                  before: 400,
-                                  after: 0, // reduce the spacing after the heading to 0
-                                },
+                              new docx.TextRun({
+                                text: (i== 0)?title:'',
+                                bold: true,
+                                size: 32,
+                                font: 'Times New Roman',
                               }),
                             ],
-                          };
+                            alignment: docx.AlignmentType.CENTER,
+                          }),
+                          new docx.Paragraph({
+                            children: [
+                              new docx.TextRun({
+                                text: sections[i],
+                                bold: true,
+                                size: 32,
+                                font: 'Times New Roman',
+                              }),
+                            ],
+                            spacing: {
+                              line: 360,
+                              before: 400,
+                              after: 0,
+                            },
+                          }),
+                        ],
+                      };
 
-                          // loop through the paragraphs and add them to the section
-                          for (let j = 0; j < paragraphs.length; j++) {
-                            section.children.push(
-                              new docx.Paragraph({
-                                children: [
-                                  new docx.TextRun({
-                                    text: paragraphs[j],
-                                    size: 28,
-                                    font: 'Times New Roman',
-                                  }),
-                                ],
-                                spacing: {
-                                  line: 360,
-                                  before: 0, // reduce the spacing before the response text to 0
-                                  after: 400,
-                                },
-                              })
-                            );
-                          }
-
-                          // add the section to the document
-                          doc.addSection(section);
-                        }
-
-
-                      //   // create the first section
-
-
-                      //   // loop through the responseText array and add each paragraph to the section
-                      //   for (let i = 0; i < responseText.length; i++) {
-
-                      //     let paragraphs = splitParagraphs(converter.makeHtml(responseText[i][1]));
-                          
-                      //     let section = {
-                      //         children: []
-                      //       };
-
-                      //     for (let j = 0; j < paragraphs.length; j++) {
-
-                          
-
-                      //       section.children.push(
-
-                      //         new docx.Paragraph({
-                      //           children: [
-                      //             new docx.TextRun({
-                      //               text: (i == 0)?title:'',
-                      //               bold: true,
-                      //               size: 32,
-                      //               font: 'Times New Roman',
-                      //             }),
-                      //           ],
-                      //           alignment: docx.AlignmentType.CENTER, // Center align the paragraph
-                                
-                      //         }),
-
-
-                      //         new docx.Paragraph({
-                      //           children: [
-                      //             new docx.TextRun({
-                      //               text: sections[i],
-                      //               bold: true,
-                      //               size: 32,
-                      //               font: 'Times New Roman',
-                      //             }),
-                      //           ],
-                      //           spacing: {
-                      //             line: 360,
-                      //             before: 400,
-                      //             after: 0, // reduce the spacing after the heading to 0
-                      //           },
-                      //         }),
-                              
-
-                      //         new docx.Paragraph({
-                      //           children: [
-                      //             new docx.TextRun({
-                      //               text: paragraphs[j],
-                      //               size: 28,
-                      //               font: 'Times New Roman',
-                      //             }),
-                      //           ],
-                      //           spacing: {
-                      //             line: 360,
-                      //             before: 0, // reduce the spacing before the response text to 0
-                      //             after: 400,
-                      //           },
-                      //         })
-                      //       );
-
-                      //   }
-                      //   doc.addSection(section);
-                      // }
-
-                        // add the section to the document
-
-                        docx.Packer.toBlob(doc).then(function(blob) {
-                          // Hide the loading animation
-                          // spinner.stop();
-
-                          saveAs(blob, title + ".docx");
-                        });
-                      },
-                      error: function(xhr, status, error) {
-                        // console.error(error);
-
-                      },
-                      complete: function() {
-                        // Swal.hideLoading(); // hide loader when AJAX request is complete
-                        resolve();
-                        // Hide the loading spinner
-                        // spinner.stop();
+                      for (let j = 0; j < paragraphs.length; j++) {
+                        section.children.push(
+                          new docx.Paragraph({
+                            children: [
+                              new docx.TextRun({
+                                text: paragraphs[j],
+                                size: 28,
+                                font: 'Times New Roman',
+                              }),
+                            ],
+                            spacing: {
+                              line: 360,
+                              before: 0,
+                              after: 400,
+                            },
+                          })
+                        );
                       }
+
+                      doc.addSection(section);
+                    }
+
+                    docx.Packer.toBlob(doc).then(function(blob) {
+                      saveAs(blob, title + ".docx");
                     });
-
-                      
-                  });
-                }
-            });
+                  },
+                  error: function() {},
+                  complete: function() {
+                    // Hide loading overlay once done
+                    loadingOverlay.style.display = "none";
+                    resolve();
+                  }
+                });
+              });
+            }
+          });
         });
+    </script>
 
-      </script>
-     
-      <script type="module">
-        // Import the functions you need from the SDKs you need
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js";
-        // TODO: Add SDKs for Firebase products that you want to use
-        // https://firebase.google.com/docs/web/setup#available-libraries
-      
-        // Your web app's Firebase configuration
-        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-        const firebaseConfig = {
-          apiKey: "AIzaSyB0Md4LB3W4OZSJC7ywX0z2xcbJ5NbbOKg",
-          authDomain: "wdcg-502f8.firebaseapp.com",
-          projectId: "wdcg-502f8",
-          storageBucket: "wdcg-502f8.appspot.com",
-          messagingSenderId: "848359225773",
-          appId: "1:848359225773:web:bf11746a853d070e3e0924",
-          measurementId: "G-PJFCD117YE"
-        };
-      
-        // Initialize Firebase
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-      </script>
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.17.1/firebase-analytics.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyB0Md4LB3W4OZSJC7ywX0z2xcbJ5NbbOKg",
+        authDomain: "wdcg-502f8.firebaseapp.com",
+        projectId: "wdcg-502f8",
+        storageBucket: "wdcg-502f8.appspot.com",
+        messagingSenderId: "848359225773",
+        appId: "1:848359225773:web:bf11746a853d070e3e0924",
+        measurementId: "G-PJFCD117YE"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
 </body>
-
-<footer>
-  <p>&copy; 2023. All rights reserved. Follow me on <a href="https://twitter.com/_samuelaidoo" style="color:#007bff">Twitter</a></p>
-</footer> 
-
 </html>
